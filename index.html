@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        
+    </script>
+<style>
+    *{
+    margin : 0;
+    padding : 0;
+    font-family : sans-serif;
+}
+body {
+    background-color : #548687;
+    text-align: center;
+   
+}
+.container {
+   position : absolute;
+   top :50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+     width : 380px;
+     display : flex;
+     flex-wrap: wrap;
+     gap: 17px;
+     padding : 10px;
+     align-items: center;
+     justify-content: center;
+}
+.box {
+    width: 110px;
+    height: 110px;
+    font-size: 40px;
+    border-radius: 16px;
+    outline : none ;
+    border : none;
+    background-color: #D7CEB2 ;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+}
+.box button {
+     font-size: 3;
+}
+.reset {
+     width:130px;
+     height: 30px;
+    font-weight:  700;
+    font-size: 16px;
+    position: relative;
+    top : 30px;
+   
+    color : white ;
+    outline : none ;
+    border : none;
+    border-radius: 10px;
+   
+    background-color:black ;
+    color : white;
+}
+@media (max-width : 555px){
+ #winner{
+    font-size: 20px;
+ }
+ .box {
+    width : 90px
+ }
+ .container{
+
+    margin-left: 20px;
+ }
+ #winner{
+    margin-left: 12px;
+ }
+}
+#winner {
+    margin-left : 12px;
+    margin-top: 14px;
+    font-size : 25px;
+}
+</style>
+</head>
+<body>
+    <p id="winner"></p>
+<main>
+    
+  
+        <div class="container">
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+            <button class="box"></button>
+ 
+            <button class="reset">Reset Game</button>
+        </div>
+      <script src="script.js">
+        let box = document.querySelectorAll(".box");
+let resetButton = document.querySelector(".reset");
+let turnO=true;
+
+const winPattern =[
+   [0,1,2],
+   [3,4,5],
+   [6,7,8],
+   [0,3,6],
+   [1,4,7],
+   [2,5,8],
+   [0,4,8],
+   [2,4,6]
+];
+ const resetGame = () =>{
+     turnO = true;
+     enableBox();
+     document.getElementById("winner").style.display="none";
+
+ };
+const disabledBox = () =>{
+    for(let box1 of box) {
+         box1.disabled = true;
+         document.getElementById("winner").style.display="none";
+    }
+};
+
+const enableBox = () =>{
+    for(let box1 of box) {
+         box1.disabled = false;
+         box1.innerText="";
+    }
+};
+box.forEach((box) =>{
+    box.addEventListener("click", () =>{
+         if(turnO) {
+            box.innerText = "X";
+            box.style.color = "red";
+            turnO = false
+         }  else {
+            box.innerText = "O";
+            box.style.color = "blue";
+            turnO = true;
+         }
+         box.disabled = true;
+         checkWinner();
+    });
+});
+const checkWinner = () =>{
+    for(let pattern of winPattern) {
+       let pos1 =  box[pattern[0]].innerText ;
+       let  pos2 = box[pattern[1]].innerText ;
+       let  pos3 = box[pattern[2]].innerText;
+   
+    if(pos1 != "" && pos2 !="" && pos3 !="") {
+       if(pos1 === pos2 && pos2 === pos3) {
+        disabledBox();
+        winner.style.display = "flex";
+        winner.innerText = `Congratulation Winner is ${pos1}`;
+      console.log("winner");
+        
+       }
+    }
+ }
+};
+resetButton.addEventListener("click",resetGame);
+      </script>
+</main>   
+</body>
+</html>
